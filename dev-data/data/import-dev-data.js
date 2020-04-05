@@ -25,7 +25,9 @@ mongoose
   });
 
 // Read json file
-const tours = fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf8');
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf8')
+);
 
 // Import dsts inti database
 const importData = async () => {
@@ -35,16 +37,23 @@ const importData = async () => {
   } catch (err) {
     console.log(err);
   }
+  process.exit();
 };
 
 // delete all data from the database
 const deleteData = async () => {
   try {
-    await tours.deleteMany();
+    await Tour.deleteMany();
     console.log('data deleted successfully');
   } catch (err) {
     console.log(err);
   }
+  process.exit();
 };
 
+if (process.argv[2] === '--import') {
+  importData();
+} else if (process.argv[2] === '--delete') {
+  deleteData();
+}
 console.log(process.argv);
