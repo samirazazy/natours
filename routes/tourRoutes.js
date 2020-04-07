@@ -10,6 +10,7 @@ router
   .get(tourController.aslisTopTours, tourController.getAllTours);
 
 router.route('/tours-stats').get(tourController.getTourStats);
+router.route('/monthely-plan/:year').get(tourController.getMonthelyPlan);
 
 router
   .route('/')
