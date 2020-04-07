@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const valiator = require('validator');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -123,7 +124,7 @@ tourSchema.post(/^find/, function(docs, next) {
 tourSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-  console.log(this.pipeline());
+  // console.log(this.pipeline());
   next();
 });
 
