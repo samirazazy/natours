@@ -1,6 +1,7 @@
 const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatuers');
 const CatchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
 
 exports.aslisTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -27,11 +28,16 @@ exports.getAllTours = CatchAsync(async (req, res, next) => {
 });
 
 exports.getTour = CatchAsync(async (req, res, next) => {
-  const tours = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id);
+
+  if (!tour) {
+    return next(new AppError('No Tour found for with this ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
-      tours
+      tour
     }
   });
 });
@@ -59,7 +65,12 @@ exports.updateTour = CatchAsync(async (req, res, next) => {
 });
 
 exports.deleteTour = CatchAsync(async (req, res, next) => {
-  await Tour.findByIdAndDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id);
+
+  if (!tour) {
+    return next(new AppError('No Tour found for with this ID', 404));
+  }
+
   res.status(204).json({
     status: 'success',
     data: null
