@@ -1,9 +1,7 @@
 /* eslint-disable */
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
-import { login, logout } from './login';
-import { updateSettings } from './updateSettings';
-import { bookTour } from './stripe';
+import { login } from './login';
 import { showAlert } from './alerts';
 
 // DOM ELEMENTS
@@ -36,7 +34,7 @@ if (userDataForm)
     const form = new FormData();
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
-    form.append('photo', document.getElementById('photo').files[0]);
+    // form.append('photo', document.getElementById('photo').files[0]);
 
     updateSettings(form, 'data');
   });
