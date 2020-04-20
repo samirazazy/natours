@@ -22,4 +22,11 @@ router.post(
   viewsController.updateUserData
 );
 
+router.get(
+  '/my-tours',
+  bookingController.createBookingCheckout,
+  authController.protect,
+  viewsController.getMyTours
+);
+
 module.exports = router;
